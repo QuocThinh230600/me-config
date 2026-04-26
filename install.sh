@@ -18,9 +18,10 @@ echo "======AUTO INSTALL APP======"
 echo "📂 Script dir: $SCRIPT_DIR"
 echo "🏠 Home dir  : $HOME_DIR"
 echo "============================"
+echo " "
 
-BASE_PKGS=(curl zsh tmux neovim btop fastfetch clang cmake ark discord mpv lact audacity tailscale telegram-desktop blender obs-studio spotify-launcher)
-BASE_YAYS=(sunshine moonlight-qt visual-studio-code-bin heroic-games-laucher-bin protonplus)
+BASE_PKGS=(curl zsh unzip zip tmux neovim btop fastfetch clang cmake ark steam discord mpv lact audacity tailscale telegram-desktop blender obs-studio spotify-launcher docker lazydocker)
+BASE_YAYS=(tty-clock sunshine moonlight-qt visual-studio-code-bin heroic-games-launcher-bin protonplus localsend-bin)
 
 # Detect package manager
 install_pkg() {
@@ -42,8 +43,11 @@ install_yays() {
 }
 
 # Auto Update
+echo "============================"
+echo "🎮 Enabling multilib for Steam..."
+sudo sed -i '/\[multilib\]/,/Include/ s/^#//' /etc/pacman.conf
 sudo pacman -Syu --noconfirm
-
+echo "============================"
 # Install Yay
 if ! command -v yay &>/dev/null; then
   echo "📦 Installing yay..."
@@ -109,6 +113,12 @@ if [ "$SHELL" != "$(command -v zsh)" ]; then
   echo "🔁 Changing default shell to zsh..."
   chsh -s "$(command -v zsh)"
 fi
+
+echo "⚙️ Enabling services..."
+systemctl --user enable --now sunshine
+sudo systemctl enable --now tailscaled
+sudo systemctl enable --now docker
+sudo systemctl enable --now lactd
 
 # Flash spotify
 bash <(curl -sSL https://spotx-official.github.io/run.sh)

@@ -120,10 +120,11 @@ alias nv=nvim
 alias ovim=vim
 alias os='nvim ~/.zshrc'
 alias ss='source ~/.zshrc'
-
+alias pacman='sudo pacman'
+alias syu='sudo pacman -Syu'
 alias cls='clear'
 alias ff='fastfetch'
-
+alias clock='tty-clock -c'
 alias tmuxkill='tmux kill-session'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

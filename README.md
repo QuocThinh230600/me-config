@@ -1,1 +1,1 @@
-Nvim + Tmux Config
+Auto install app

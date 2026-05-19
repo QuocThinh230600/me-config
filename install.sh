@@ -20,8 +20,61 @@ echo "🏠 Home dir  : $HOME_DIR"
 echo "============================"
 echo " "
 
-BASE_PKGS=(curl zsh unzip zip tmux neovim btop fastfetch clang cmake ark steam discord mpv lact audacity tailscale telegram-desktop blender obs-studio spotify-launcher docker lazydocker)
-BASE_YAYS=(tty-clock sunshine moonlight-qt visual-studio-code-bin heroic-games-launcher-bin protonplus localsend-bin)
+BASE_YAYS=(
+	tty-clock
+	moonlight-qt
+	visual-studio-code-bin
+	heroic-games-launcher-bin
+  protonplus
+  localsend-bin
+	google-chrome
+	sunshine
+	fcitx5-bamboo
+)
+
+BASE_PKGS=(
+	sdl3 sdl3_image sdl3_ttf sdl3_mixer
+  dotnet-sdk
+  sdl2 openal
+  freetype2
+	lsd
+	curl
+  zsh
+  unzip
+  zip
+	cuda
+	tmux
+  neovim 
+	btop
+  fastfetch
+  clang
+  cmake
+  ark
+  steam
+  discord
+  mpv
+ 	lact
+  audacity
+  tailscale
+ 	telegram-desktop
+ 	blender
+  obs-studio
+  spotify-launcher
+	kdenlive
+	filelight
+	okular
+	gwenview
+	kclock
+	elisa
+	korganizer
+	nerd-fonts
+	qemu-full virt-manager virt-viewer dnsmasq vde2 openbsd-netcat
+	fcitx5 fcitx5-qt fcitx5-gtk 
+	wine
+	fcitx5-configtool
+  powerdevil power-profiles-daemon
+)
+
 
 # Detect package manager
 install_pkg() {
@@ -48,21 +101,18 @@ echo "🎮 Enabling multilib for Steam..."
 sudo sed -i '/\[multilib\]/,/Include/ s/^#//' /etc/pacman.conf
 sudo pacman -Syu --noconfirm
 echo "============================"
-# Install Yay
-if ! command -v yay &>/dev/null; then
-  echo "📦 Installing yay..."
-  install_pkg git base-devel
-  git clone https://aur.archlinux.org/yay.git
-  cd yay || exit
-  makepkg -si --noconfirm
-  cd ..
-  rm -rf yay
-  echo "✅ Git Base-Devel Yay installed"
-else
-  echo "✅ Git Base-Devel Yay already installed"
-fi
 
 # Install base tools
+for yay in "${BASE_YAYS[@]}"; do
+  if ! command -v "$yay" &>/dev/null; then
+    echo "📦 Installing $yay..."
+    install_yays "$yay"
+    echo "✅ $yay installed"
+  else
+    echo "✅ $yay already installed"
+  fi
+done
+
 for pkg in "${BASE_PKGS[@]}"; do
   if ! command -v "$pkg" &>/dev/null; then
     echo "📦 Installing $pkg..."
@@ -73,15 +123,7 @@ for pkg in "${BASE_PKGS[@]}"; do
   fi
 done
 
-for yay in "${BASE_YAYS[@]}"; do
-  if ! command -v "$yay" &>/dev/null; then
-    echo "📦 Installing $yay..."
-    install_yays "$yay"
-    echo "✅ $yay installed"
-  else
-    echo "✅ $yay already installed"
-  fi
-done
+
 
 # Install Oh My Zsh
 if [ ! -d "$HOME_DIR/.oh-my-zsh" ]; then
@@ -117,11 +159,13 @@ fi
 echo "⚙️ Enabling services..."
 systemctl --user enable --now sunshine
 sudo systemctl enable --now tailscaled
-sudo systemctl enable --now docker
 sudo systemctl enable --now lactd
+sudo systemctl enable --now libvirtd
+sudo systemctl start libvirtd
+sudo systemctl enable --now power-profiles-daemon
+dotnet new install MonoGame.Templates.CSharp
 
 # Flash spotify
-bash <(curl -sSL https://spotx-official.github.io/run.sh)
 
 echo "🎉 DONE! Logout/login lại để dùng zsh + tmux."
 

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+
+  "logo": {
+    "source": "~/.config/fastfetch/logo.txt",
+    "type": "file"
+  },
+
+  "modules": [
+    "title",
+    "break",
+
+    "os",
+    "kernel",
+    "wm",
+
+    "break",
+
+    "display",
+
+    {
+      "type": "host",
+      "key": "MainBoard"
+    },
+
+    {
+      "type": "cpu",
+      "format": "12th Gen Intel(R) Core(TM) i5-12400F @ 4.40GHz"
+    },
+
+    "gpu",
+
+    "break",
+
+    "memory",
+    "swap",
+    "disk",
+
+    "break",
+
+    "packages",
+    "uptime"
+  ]
+}

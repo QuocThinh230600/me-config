@@ -28,7 +28,7 @@ BASE_YAYS=(
   protonplus
   localsend-bin
 	google-chrome
-	sunshine
+	sunshine-bin
 	fcitx5-bamboo
 )
 

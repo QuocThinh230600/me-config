@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "supper display none",
-  "version": "1.2",
-  "description": "CSS + JS - update hidden thông báo on zalo, ẩn thông báo nổi trên shopee khi sử dụng ex so sánh giá",
+  "name": "Custom CSS",
+  "version": "0.1",
+  "description": "Custom CSS",
   "permissions": [
     "activeTab"
   ],
@@ -12,18 +12,10 @@
   "content_scripts": [
     {
       "matches": [
-        "https://shopee.vn/*"
+        "https://docs.monogame.net/*"
       ],
       "css": [
-        "styles.css"
-      ]
-    },
-    {
-      "matches": [
-        "https://chat.zalo.me//*"
-      ],
-      "css": [
-        "styles.css"
+        "./Monogame-css/styles.css"
       ]
     }
   ]
